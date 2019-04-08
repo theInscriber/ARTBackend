@@ -56,6 +56,6 @@ class Person extends Model
 
     public function getRouteKey()
     {
-        return 'uuid';
+        return 'person_id';
     }
 }

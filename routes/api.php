@@ -13,36 +13,60 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::group(['prefix' => 'auth', 'middleware' => 'api'], function () {
+    Route::post('login', 'APIAuthController@login');
+    Route::post('register', 'APIAuthController@register');
+    Route::post('logout', 'APIAuthController@logout');
+    Route::post('refresh', 'APIAuthController@refresh');
+});
+
+
 Route::group([
-    'middleware' => 'api'
+    'middleware' => 'auth:api'
 ], function ($router){
 
     $router->get('/master-cards', 'MasterCardController@getAll');
     $router->get('/master-cards/{masterCard}', 'MasterCardController@get');
 
     $router->get('/encounter-types', 'EncounterTypeController@getAll');
-    $router->get('/encounter-types/{id}', 'EncounterTypeController@get');
-
-    $router->get('/encounters', 'EncounterController@getAll');
-    $router->get('/encounters/{id}', 'EncounterController@get');
+    $router->get('/encounter-types/{encounterType}', 'EncounterTypeController@get');
 
     $router->get('/concepts', 'ConceptController@getAll');
-    $router->get('/concepts/{id}', 'ConceptController@get');
+    $router->get('/concepts/{concept}', 'ConceptController@get');
 
     $router->get('/patients', 'PatientController@getAll');
     $router->post('/patients', 'PatientController@store');
     $router->post('/patients/search', 'PatientController@search');
-    $router->get('/patients/{id}', 'PatientController@get');
-    $router->get('/patients/{id}/cards', 'PatientController@getCards');
+    $router->get('/patients/{patient}', 'PatientController@get');
+    $router->get('/patients/{patient}/cards', 'PatientController@getCards');
 
     $router->post('/patient-cards', 'PatientCardController@store');
-    $router->get('/patient-cards/{id}', 'PatientCardController@get');
-    $router->post('/patient-cards/{id}/data', 'PatientCardController@getData');
+    $router->get('/patient-cards/{patientCard}', 'PatientCardController@get');
+    $router->post('/patient-cards/{patientCard}/data', 'PatientCardController@getData');
 
     $router->get('/people', 'PersonController@getAll');
-    $router->get('/people/{id}', 'PersonController@get');
+    $router->get('/people/{person}', 'PersonController@get');
 
     $router->post('/observations', 'ObservationController@store');
-    $router->get('/observations/{id}', 'ObservationController@get');
+    $router->get('/observations/{observation}', 'ObservationController@get');
+
+    $router->get('/regions', 'RegionController@getAll');
+    $router->get('/regions/{region}', 'RegionController@get');
+    $router->get('/regions/{region}/districts', 'RegionController@getDistricts');
+
+    $router->get('/districts', 'DistrictController@getAll');
+    $router->get('/districts/{district}', 'DistrictController@get');
+    $router->get('/districts/{district}/traditional-authorities', 'DistrictController@getTraditionalAuthorities');
+
+    $router->get('/traditional-authorities', 'TraditionalAuthorityController@getAll');
+    $router->get('/traditional-authorities/{traditionalAuthority}', 'TraditionalAuthorityController@get');
+    $router->get('/traditional-authorities/{traditionalAuthority}/villages', 'TraditionalAuthorityController@getVillages');
+
+    $router->get('/villages', 'VillageController@getAll');
+    $router->get('/villages/{village}', 'VillageController@get');
+
+    $router->post('/reports/counts', 'ReportController@getReportCounts');
+    $router->post('/reports/patients', 'ReportController@getReportPatients');
+    $router->post('/reports/export', 'ReportController@exportReportPatients');
 });
 

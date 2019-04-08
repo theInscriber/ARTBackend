@@ -30,6 +30,6 @@ class ConceptDatatype extends Model
 
     public function getRouteKey()
     {
-        return 'uuid';
+        return 'concept_datatype_id';
     }
 }

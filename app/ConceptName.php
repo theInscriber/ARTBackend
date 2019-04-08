@@ -30,6 +30,6 @@ class ConceptName extends Model
 
     public function getRouteKey()
     {
-        return 'uuid';
+        return 'concept_name_id';
     }
 }

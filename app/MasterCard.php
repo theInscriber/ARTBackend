@@ -51,7 +51,7 @@ class MasterCard extends Model
 
     public function getRouteKey()
     {
-        return 'uuid';
+        return 'master_card_id';
     }
 
 }

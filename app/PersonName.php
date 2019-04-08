@@ -32,7 +32,7 @@ class PersonName extends Model
 
     public function getRouteKey()
     {
-        return 'uuid';
+        return 'person_name_id';
     }
 
 }

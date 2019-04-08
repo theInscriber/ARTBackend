@@ -14,18 +14,9 @@ class PersonAddress extends Model
     const UPDATED_AT = null;
 
     protected $fillable = [
-        'address1',
-        'address2',
         'city_village',
-        'state_province',
-        'postal_code',
-        'country',
-        'latitude',
-        'longitude',
-        'county_district',
-        'neighborhood_cell',
+        'country_district',
         'region',
-        'subregion',
         'township_division'
     ];
 
@@ -45,6 +36,6 @@ class PersonAddress extends Model
 
     public function getRouteKey()
     {
-        return 'uuid';
+        return 'person_address_id';
     }
 }

@@ -36,7 +36,7 @@ class CreatePersonAddressTable extends Migration
             $table->dateTime('date_voided')->nullable();
             $table->string('void_reason')->nullable();
 
-            $table->string('county_district')->nullable();
+            $table->string('country_district')->nullable();
             $table->string('neighborhood_cell')->nullable();
             $table->string('region')->nullable();
             $table->string('subregion')->nullable();

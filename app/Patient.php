@@ -14,7 +14,7 @@ class Patient extends Model
 
     public $incrementing = false;
 
-    protected $fillable = ['tribe', 'guardian_name', 'patient_phone','guardian_phone', 'follow_up', 'guardian_relation'];
+    protected $fillable = ['art_number', 'tribe', 'guardian_name', 'patient_phone','guardian_phone', 'follow_up', 'guardian_relation'];
 
     public function person()
     {
@@ -29,6 +29,11 @@ class Patient extends Model
     public function patientCards()
     {
         return $this->hasMany(PatientCard::class, 'patient_id');
+    }
+
+    public function observations()
+    {
+        return $this->hasMany(Observation::class, 'patient_id');
     }
 
     public function getRouteKey()

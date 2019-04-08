@@ -43,4 +43,9 @@ class Encounter extends Model
         });
     }
 
+    public function getRouteKey()
+    {
+        return 'encounter_id';
+    }
+
 }

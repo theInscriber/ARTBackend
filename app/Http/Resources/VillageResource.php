@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
 
-class ConfirmatoryHIVTestBeforeARTStartResource extends Resource
+class VillageResource extends Resource
 {
     /**
      * Transform the resource into an array.
@@ -14,6 +14,11 @@ class ConfirmatoryHIVTestBeforeARTStartResource extends Resource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'object' => 'VillageResource',
+            'villageID' => $this->village_id,
+            'name' => $this->name,
+            'dateCreated' => $this->date_created
+        ];
     }
 }

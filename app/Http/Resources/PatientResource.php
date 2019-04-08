@@ -18,6 +18,7 @@ class PatientResource extends Resource
         return [
             'object' => 'PatientResource',
             'patientID' => $this->patient_id,
+            'artNumber' => $this->art_number,
             'tribe' => $this->tribe,
             'guardianName' => $this->guardian_name,
             'patientPhone' => $this->patient_phone,
@@ -26,7 +27,6 @@ class PatientResource extends Resource
             'guardianRelation' => $this->guardian_relation,
             'person' => new PersonResource($this->person),
             'dateCreated' => (string)$this->date_created,
-            'uuid' => $this->uuid
         ];
     }
 }

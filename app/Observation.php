@@ -54,6 +54,6 @@ class Observation extends Model
 
     public function getRouteKey()
     {
-        return 'uuid';
+        return 'obs_id';
     }
 }

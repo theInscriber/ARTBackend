@@ -15,7 +15,7 @@ class CreateMasterCardTable extends Migration
     {
         Schema::create('master_card', function (Blueprint $table) {
             $table->increments('master_card_id');
-            $table->integer('version')->unique();
+            $table->string('version')->unique();
             $table->enum('status',[0,1]);
 
             $table->integer('creator')->default(0);

@@ -48,6 +48,6 @@ class EncounterType extends Model
 
     public function getRouteKey()
     {
-        return 'uuid';
+        return 'encounter_type_id';
     }
 }

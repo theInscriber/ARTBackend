@@ -40,7 +40,7 @@ class PatientCard extends Model
 
     public function getRouteKey()
     {
-        return 'uuid';
+        return 'patient_card_id';
     }
 
 }

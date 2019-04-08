@@ -52,7 +52,7 @@ class Concept extends Model
 
     public function getRouteKey()
     {
-        return 'uuid';
+        return 'concept_id';
     }
 
 }

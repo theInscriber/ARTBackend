@@ -5,6 +5,7 @@ namespace App\Http\Services;
 
 use App\Patient;
 use App\Person;
+use Carbon\Carbon;
 
 class PatientService
 {
@@ -22,7 +23,8 @@ class PatientService
     public function search($searchParam)
     {
         return Patient::orderBy('date_created', 'desc')
-            ->whereHas('person', function ($query) use ($searchParam){
+            ->where('art_number', 'like', '%'. $searchParam . '%')
+            ->orWhereHas('person', function ($query) use ($searchParam){
                 $query->whereHas('names', function ($query) use ($searchParam){
                     $query->where('given_name', 'like', '%'. $searchParam . '%')
                         ->orWhere('middle_name', 'like', '%'. $searchParam . '%')
@@ -35,6 +37,9 @@ class PatientService
     {
         $patient = new Patient;
         $patient->fill($data);
+        if (isset($data['age']))
+            $patient = $this->parseAge($patient, $data);
+
         $patient->person()->associate($person);
 
         $patient->save();
@@ -46,6 +51,13 @@ class PatientService
     {
         $patient->update($data);
 
+        return $patient;
+    }
+
+    public function parseAge(Patient $patient, $data)
+    {
+        $dob = Carbon::today()->subYears($data['age']);
+        $patient->birthdate = $dob->toDateString();
         return $patient;
     }
 }
