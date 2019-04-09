@@ -210,6 +210,9 @@ class ReportController extends Controller
             #Get ConceptObs
             #StartDateObs
             $startDate = $patient->person->observations->where('concept_id', $startDateConcept->concept_id)->first();
+            if (is_null($startDate))
+                continue;
+
             if (empty($startDate->value))
             {
                 $firstEncounter = $patient->encounters->first();
@@ -226,7 +229,7 @@ class ReportController extends Controller
 
             #AdverseOutcome
             $adverseOutcome = $lastEncounter->observations->where('concept_id', $adverseOutcomeConcept->concept_id)->first();
-            if (is_null($visitDate) || is_null($startDate))
+            if (is_null($visitDate))
                 continue;
             #Get Month Difference for 6,12,After 12
             $parsedVisitDate = Carbon::parse($visitDate->value);
