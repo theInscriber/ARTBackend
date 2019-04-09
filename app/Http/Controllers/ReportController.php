@@ -226,7 +226,7 @@ class ReportController extends Controller
 
             #AdverseOutcome
             $adverseOutcome = $lastEncounter->observations->where('concept_id', $adverseOutcomeConcept->concept_id)->first();
-            if (is_null($visitDate))
+            if (is_null($visitDate) || is_null($startDate))
                 continue;
             #Get Month Difference for 6,12,After 12
             $parsedVisitDate = Carbon::parse($visitDate->value);
