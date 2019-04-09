@@ -30,7 +30,7 @@ class PatientService
                         ->orWhere('middle_name', 'like', '%'. $searchParam . '%')
                         ->orWhere('family_name', 'like', '%'. $searchParam . '%');
                 });
-            })->get()->unique();
+            })->distinct()->get();
     }
 
     public function create(Person $person, $data)
