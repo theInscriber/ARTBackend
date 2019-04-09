@@ -465,13 +465,13 @@ class ReportController extends Controller
 
             #Check if Past Today and if not Dead
             if (
-                $defaultedBy31->greaterThan($today) &&
+                $defaultedBy31->lessThan($today) &&
                 is_null($adverseOutcome->value)
             )
                 $defaultedBy31Days->push($patient);
 
             if (
-                $defaultedBy61->greaterThan($today) &&
+                $defaultedBy61->lessThan($today) &&
                 is_null($adverseOutcome->value)
             )
                 $defaultedBy61Days->push($patient);
