@@ -26,7 +26,7 @@ class PatientController extends Controller
         return new PatientResource($patient);
     }
 
-    public function store(PatientFormRequest $request)
+    public function store(Request $request)
     {
         $data = $request->all();
 

@@ -226,7 +226,8 @@ class ReportController extends Controller
 
             #AdverseOutcome
             $adverseOutcome = $lastEncounter->observations->where('concept_id', $adverseOutcomeConcept->concept_id)->first();
-
+            if (is_null($visitDate))
+                continue;
             #Get Month Difference for 6,12,After 12
             $parsedVisitDate = Carbon::parse($visitDate->value);
             $dateAfter6Months = Carbon::parse($startDate->value)->addMonth(6);
@@ -326,6 +327,9 @@ class ReportController extends Controller
             #AdverseOutcome
             $adverseOutcome = $lastEncounter->observations->where('concept_id', $adverseOutcomeConcept->concept_id)->first();
 
+            if (is_null($nextAppointmentDate))
+                continue;
+
             if (is_null($nextAppointmentDate->value))
                 continue;
 
@@ -364,6 +368,8 @@ class ReportController extends Controller
             #AdverseOutcome
             $adverseOutcome = $lastEncounter->observations->where('concept_id', $adverseOutcomeConcept->concept_id)->first();
 
+            if (is_null($lastViralLoad))
+                continue;
 
             if (is_null($lastViralLoad->value))
                 continue;
@@ -400,6 +406,8 @@ class ReportController extends Controller
             #AdverseOutcome
             $adverseOutcome = $lastEncounter->observations->where('concept_id', $adverseOutcomeConcept->concept_id)->first();
 
+            if (is_null($ARTRegimen))
+                continue;
             if (is_null($ARTRegimen->value))
                 continue;
 
@@ -440,6 +448,9 @@ class ReportController extends Controller
 
             #AdverseOutcome
             $adverseOutcome = $lastEncounter->observations->where('concept_id', $adverseOutcomeConcept->concept_id)->first();
+
+            if (is_null($nextAppointmentDate))
+                continue;
 
             if (is_null($nextAppointmentDate->value))
                 continue;
@@ -485,6 +496,11 @@ class ReportController extends Controller
             $adverseOutcome = $lastEncounter->observations->where('concept_id', $adverseOutcomeConcept->concept_id)->first();
 
             #Check if Past Today and if not Dead
+            if (
+            is_null($adverseOutcome)
+            )
+                return true;
+
             if (
             is_null($adverseOutcome->value)
             )
