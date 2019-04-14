@@ -65,9 +65,7 @@ class ReportController extends Controller
 
         $report = App::make(ReportService::class)->getReport($data);
 
-        $reportPayload['counts'] = PatientResource::collection($report);
-
-        return Excel::download(new PatientsExport($reportPayload['counts']),'patient-report.xlsx');
+        return Excel::download(new PatientsExport($report),'patient-report.xlsx');
     }
 
 }

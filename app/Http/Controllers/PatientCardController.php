@@ -12,8 +12,6 @@ use App\Http\Services\PatientService;
 use App\Http\Services\PersonService;
 use App\MasterCard;
 use App\Patient;
-use App\PatientCard;
-use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 

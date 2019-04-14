@@ -23,7 +23,7 @@ Route::group(['prefix' => 'auth', 'middleware' => 'api'], function () {
 
 
 Route::group([
-    'middleware' => 'auth:api'
+    'middleware' => 'api'
 ], function ($router){
 
     $router->get('/master-cards', 'MasterCardController@getAll');
@@ -40,6 +40,9 @@ Route::group([
     $router->post('/patients/search', 'PatientController@search');
     $router->get('/patients/{patient}', 'PatientController@get');
     $router->get('/patients/{patient}/cards', 'PatientController@getCards');
+    $router->get('/patients/{patient}/steps', 'PatientController@getSteps');
+
+    $router->post('/patient-steps', 'PatientStepController@store');
 
     $router->post('/patient-cards', 'PatientCardController@store');
     $router->get('/patient-cards/{patientCard}', 'PatientCardController@get');
@@ -70,6 +73,12 @@ Route::group([
     $router->get('/reports/patients', 'ReportController@getReportPatients');
     $router->get('/reports/export', 'ReportController@exportReportPatients');
 });
+
+//Route::group([
+//    'middleware' => 'api'
+//], function ($router){
+//    $router->get('/reports/export', 'ReportController@exportReportPatients');
+//});
 
 
 

@@ -16,15 +16,15 @@ class CreatePatientStepTable extends Migration
         Schema::create('patient_step', function (Blueprint $table) {
             $table->increments('patient_step_id');
             $table->integer('patient_id')->unsigned();
-            $table->date('date');
-            $table->string('site');
+            $table->date('date')->nullable();
+            $table->string('site')->nullable();
             $table->string('step');
             $table->string('origin_destination')->nullable();
             $table->string('art_number')->unique();
 
             $table->foreign('patient_id')
-                ->references('person_id')
-                ->on('person')
+                ->references('patient_id')
+                ->on('patient')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });

@@ -22,8 +22,7 @@ class PatientStepResource extends Resource
             'date' => $this->date,
             'site' => $this->site,
             'step' => $this->step,
-            'originDestination' => $this->origin_destination,
-            'patient' => new PatientResource($this->patient)
+            'originDestination' => $this->origin_destination
         ];
     }
 }

@@ -16,10 +16,10 @@
     <tbody>
     @foreach($patients as $patient)
         <tr>
-            <td>{{ $patient->personName->given_name }}</td>
-            <td>{{ $patient->personName->given_name }}</td>
-            <td>{{ $patient->personName->middle_name }}</td>
-            <td>{{ $patient->personName->family_name }}</td>
+            <td>{{ $patient->artNumber }}</td>
+            <td>{{ $patient->person->preferredName->given_name }}</td>
+            <td>{{ $patient->person->preferredName->middle_name }}</td>
+            <td>{{ $patient->person->preferredName->family_name }}</td>
             <td>{{ $patient->guardian_name }}</td>
             <td>{{ $patient->person->gender }}</td>
             <td>{{ $patient->person->preferredAddress->township_division }}</td>

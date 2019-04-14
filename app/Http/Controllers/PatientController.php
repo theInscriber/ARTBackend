@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PatientFormRequest;
 use App\Http\Resources\PatientCardResource;
 use App\Http\Resources\PatientResource;
+use App\Http\Resources\PatientStepResource;
 use App\Http\Services\PatientService;
 use App\Http\Services\PersonService;
 use App\Patient;
@@ -62,5 +63,14 @@ class PatientController extends Controller
         $patientCards =  $patient->patientCards;
 
         return PatientCardResource::collection($patientCards);
+    }
+
+    public function getSteps($patientID)
+    {
+        $patient = App::make(PatientService::class)->findByID($patientID);
+
+        $patientSteps =  $patient->steps;
+
+        return PatientStepResource::collection($patientSteps);
     }
 }

@@ -23,7 +23,9 @@ class PatientService
     public function search($searchParam)
     {
         return Patient::orderBy('date_created', 'desc')
-            ->where('art_number', 'like', '%'. $searchParam . '%')
+            ->orWhereHas('steps', function ($query) use ($searchParam){
+                $query->where('art_number', 'like', '%'. $searchParam . '%');
+            })
             ->orWhereHas('person', function ($query) use ($searchParam){
                 $query->whereHas('names', function ($query) use ($searchParam){
                     $query->where('given_name', 'like', '%'. $searchParam . '%')
