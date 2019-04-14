@@ -68,6 +68,13 @@ Route::group([
 
     $router->get('/reports/counts', 'ReportController@getReportCounts');
     $router->get('/reports/patients', 'ReportController@getReportPatients');
+});
+
+Route::group([
+    'middleware' => 'api'
+], function ($router){
     $router->get('/reports/export', 'ReportController@exportReportPatients');
 });
+
+
 
