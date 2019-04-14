@@ -36,18 +36,10 @@ class PatientFormRequest extends FormRequest
             'guardian_phone' => 'sometimes|digits:10|nullable',
             'follow_up' => 'sometimes|string|nullable',
             'guardian_relation' => 'sometimes|string|nullable',
-            'address1' => 'sometimes|string|nullable',
-            'address2' => 'sometimes|string|nullable',
+            'region' => 'sometimes|string|nullable',
             'city_village' => 'sometimes|string|nullable',
-            'state_province' => 'sometimes|string|nullable',
-            'postal_code' => 'sometimes|string|nullable',
-            'country' => 'sometimes|string|nullable',
-            'latitude' => 'sometimes|string|nullable',
-            'longitude' => 'sometimes|string|nullable',
             'county_district' => 'sometimes|string|nullable',
             'neighborhood_cell' => 'sometimes|string|nullable',
-            'region' => 'sometimes|string|nullable',
-            'subregion' => 'sometimes|string|nullable',
             'township_division' => 'sometimes|string|nullable'
         ];
     }

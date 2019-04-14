@@ -4,11 +4,16 @@ namespace App\Exports;
 
 use App\Patient;
 use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class PatientsExport implements FromView
 {
+
+    use Exportable;
+
     protected  $patients;
 
     /**
@@ -25,4 +30,5 @@ class PatientsExport implements FromView
             'patients' => $this->patients->all()
         ]);
     }
+
 }

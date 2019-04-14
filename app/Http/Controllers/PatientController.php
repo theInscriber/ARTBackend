@@ -36,9 +36,14 @@ class PatientController extends Controller
         return new PatientResource($patient);
     }
 
-    public function update($patient)
+    public function update(Request $request, Patient $patient)
     {
+        $data = $request->all();
 
+        $person = App::make(PersonService::class)->update($patient->person, $data);
+        $patient = App::make(PatientService::class)->create($patient, $data);
+
+        return new PatientResource($patient);
     }
 
     public function search(Request $request)
