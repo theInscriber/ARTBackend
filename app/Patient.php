@@ -36,6 +36,16 @@ class Patient extends Model
         return $this->hasMany(Observation::class, 'patient_id');
     }
 
+    public function steps()
+    {
+        return $this->hasMany(PatientStep::class, 'patient_id');
+    }
+
+    public function getArtNumberAttribute()
+    {
+        return $this->steps->last()?$this->steps->last()->art_number:null;
+    }
+
     public function getRouteKey()
     {
         return 'patient_id';
