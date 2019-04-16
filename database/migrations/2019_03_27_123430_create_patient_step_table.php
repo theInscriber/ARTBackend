@@ -20,7 +20,7 @@ class CreatePatientStepTable extends Migration
             $table->string('site')->nullable();
             $table->string('step');
             $table->string('origin_destination')->nullable();
-            $table->string('art_number')->unique();
+            $table->string('art_number');
 
             $table->foreign('patient_id')
                 ->references('patient_id')

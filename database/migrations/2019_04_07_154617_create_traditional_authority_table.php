@@ -40,6 +40,6 @@ class CreateTraditionalAuthorityTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('traditional_authorities');
+        Schema::dropIfExists('traditional_authority');
     }
 }

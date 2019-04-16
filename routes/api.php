@@ -69,6 +69,9 @@ Route::group([
     $router->get('/villages', 'VillageController@getAll');
     $router->get('/villages/{village}', 'VillageController@get');
 
+    $router->get('/locations', 'LocationController@getAll');
+    $router->get('/locations/{location}', 'LocationController@get');
+
     $router->get('/reports/counts', 'ReportController@getReportCounts');
     $router->get('/reports/patients', 'ReportController@getReportPatients');
     $router->get('/reports/export', 'ReportController@exportReportPatients');

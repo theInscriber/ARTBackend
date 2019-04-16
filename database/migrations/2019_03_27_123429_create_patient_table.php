@@ -15,11 +15,10 @@ class CreatePatientTable extends Migration
     {
         Schema::create('patient', function (Blueprint $table) {
             $table->integer('patient_id')->unsigned();
-            $table->string('tribe');
             $table->string('guardian_name')->nullable();
             $table->string('patient_phone')->nullable();
             $table->string('guardian_phone')->nullable();
-            $table->boolean('follow_up')->nullable();
+            $table->string('follow_up')->nullable();
             $table->string('guardian_relation')->nullable();
 
             $table->integer('creator')->default(0);

@@ -14,7 +14,7 @@ class PatientStepController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'art_number' => 'required|unique:patient_step',
+            'art_number' => 'required',
             'date' => 'sometimes|date',
             'step' => 'required',
             'site' => 'sometimes|nullable|string',

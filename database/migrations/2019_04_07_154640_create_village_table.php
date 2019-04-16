@@ -40,6 +40,6 @@ class CreateVillageTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('villages');
+        Schema::dropIfExists('village');
     }
 }

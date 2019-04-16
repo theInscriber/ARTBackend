@@ -15,11 +15,6 @@ class PatientService
         return Patient::find($id);
     }
 
-    public function findByARTRegNum($patient)
-    {
-        //return Patient::where
-    }
-
     public function search($searchParam)
     {
         return Patient::orderBy('date_created', 'desc')
@@ -39,9 +34,6 @@ class PatientService
     {
         $patient = new Patient;
         $patient->fill($data);
-        if (isset($data['age']))
-            $patient = $this->parseAge($patient, $data);
-
         $patient->person()->associate($person);
 
         $patient->save();
@@ -56,10 +48,10 @@ class PatientService
         return $patient;
     }
 
-    public function parseAge(Patient $patient, $data)
-    {
-        $dob = Carbon::today()->subYears($data['age']);
-        $patient->birthdate = $dob->toDateString();
-        return $patient;
-    }
+//    public function parseAge(Patient $patient, $data)
+//    {
+//        $dob = Carbon::today()->subYears($data['age']);
+//        $patient->birthdate = $dob->toDateString();
+//        return $patient;
+//    }
 }

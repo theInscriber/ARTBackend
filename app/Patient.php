@@ -14,7 +14,7 @@ class Patient extends Model
 
     public $incrementing = false;
 
-    protected $fillable = ['art_number', 'tribe', 'guardian_name', 'patient_phone','guardian_phone', 'follow_up', 'guardian_relation'];
+    protected $fillable = ['guardian_name', 'patient_phone','guardian_phone', 'follow_up', 'guardian_relation'];
 
     public function person()
     {
@@ -45,6 +45,16 @@ class Patient extends Model
     {
         return $this->steps->last()?$this->steps->last()->art_number:null;
     }
+
+//    public function getLastVisitDateAttribute()
+//    {
+//        $visitDateConcept = Concept::find(32);
+//        $lastEncounter = $this->encounters->last();
+//
+//        $visitDate = $lastEncounter->observations->where('concept_id', $visitDateConcept->concept_id)->first();
+//
+//        return $visitDate?$visitDate->value:null;
+//    }
 
     public function getRouteKey()
     {
