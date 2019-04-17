@@ -23,7 +23,7 @@ Route::group(['prefix' => 'auth', 'middleware' => 'api'], function () {
 
 
 Route::group([
-    'middleware' => 'api'
+    'middleware' => 'auth:api'
 ], function ($router){
 
     $router->get('/master-cards', 'MasterCardController@getAll');

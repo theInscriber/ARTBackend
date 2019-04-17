@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 
 use App\Concept;
+use App\EncounterType;
 use App\Patient;
 use Carbon\Carbon;
 
@@ -25,7 +26,6 @@ class ReportService
                 $reportPayload = $dueViralLoad['due12Months'];
             else
                 $reportPayload = $dueViralLoad['dueAfter12Months'];
-
         }elseif ($data['code'] == 2)
         {
             $nextAppointmentTomorrow = $this->nextAppointmentTomorrow($patients);
@@ -82,6 +82,8 @@ class ReportService
         $visitDateConcept = Concept::find(32);
         $viralLoadSampleTakenConcept = Concept::find(45);
         $adverseOutcomeConcept = Concept::find(48);
+        $encounterType = EncounterType::find(4);
+
 
         $due6Months = collect();
         $due12Months = collect();
@@ -90,21 +92,22 @@ class ReportService
         foreach ($patients as $patient)
         {
             #Get Last Encounter
-            $lastEncounter = $patient->encounters->last();
+            $lastEncounter = $patient->encounters->where('encounter_type', $encounterType->encounter_type_id)->last();
 
             #Get ConceptObs
             #StartDateObs
-            $startDate = $patient->person->observations->where('concept_id', $startDateConcept->concept_id)->first();
+            $startDate = $patient->person->observations->where('concept_id', $startDateConcept->concept_id)->last();
+
             if (is_null($startDate))
                 continue;
 
             if (empty($startDate->value))
             {
-                $firstEncounter = $patient->encounters->first();
-                if (is_null($firstEncounter))
+                $firstVisitEncounter = $patient->encounters->where('encounter_type', $encounterType->encounter_type_id)->first();
+                if (is_null($firstVisitEncounter))
                     continue;
 
-                $startDate = $firstEncounter->observations->where('concept_id',$visitDateConcept->concept_id);
+                $startDate = $firstVisitEncounter->observations->where('concept_id',$visitDateConcept->concept_id);
             }
             #VisitDateObs
             $visitDate = $lastEncounter->observations->where('concept_id', $visitDateConcept->concept_id)->first();
@@ -120,27 +123,26 @@ class ReportService
             $parsedVisitDate = Carbon::parse($visitDate->value);
             $dateAfter6Months = Carbon::parse($startDate->value)->addMonth(6);
             $dateAfter12Months = Carbon::parse($startDate->value)->addMonth(12);
-            $dateAfter13Months = $dateAfter12Months->addMonth(1);
-
+            $dateAfter13Months = Carbon::parse($startDate->value)->addMonth(13);
             #Check if Past Today and if not Dead
             if (
-                $dateAfter6Months->greaterThan($today) &&
-                $dateAfter6Months->lessThanOrEqualTo($dateAfter12Months) &&
+                $today->greaterThan($dateAfter6Months) &&
+                $today->lessThan($dateAfter12Months) &&
                 $viralLoadSampleTaken->value == 'Bled' &&
                 $adverseOutcome->value != 'D'
             )
                 $due6Months->push($patient);
             elseif (
-                $dateAfter12Months->greaterThan($today) &&
-                $dateAfter13Months->lessThanOrEqualTo($today) &&
+                $today->greaterThan($dateAfter12Months) &&
+                $today->lessThan($dateAfter13Months) &&
                 $viralLoadSampleTaken->value == 'Bled' &&
                 $adverseOutcome->value != 'D'
 
             )
                 $due12Months->push($patient);
             elseif (
-                $dateAfter13Months->greaterThan($today) &&
-                $dateAfter13Months->greaterThan($parsedVisitDate) &&
+                $today->greaterThan($dateAfter13Months) &&
+                $parsedVisitDate->lessThan($dateAfter13Months) &&
                 $viralLoadSampleTaken->value == 'Bled' &&
                 $adverseOutcome->value != 'D'
             )
@@ -159,13 +161,14 @@ class ReportService
         $tomorrow = Carbon::tomorrow();
         $nextAppointmentDateConcept = Concept::find(47);
         $adverseOutcomeConcept = Concept::find(48);
+        $encounterType = EncounterType::find(4);
 
         $tomorrowsAppointments = collect();
 
         foreach ($patients as $patient)
         {
             #Get Last Encounter
-            $lastEncounter = $patient->encounters->last();
+            $lastEncounter = $patient->encounters->where('encounter_type', $encounterType->encounter_type_id)->last();
 
             #Get ConceptObs
             #Next Appointment DateObs
@@ -198,13 +201,14 @@ class ReportService
         $today = Carbon::today();
         $nextAppointmentDateConcept = Concept::find(47);
         $adverseOutcomeConcept = Concept::find(48);
+        $encounterType = EncounterType::find(4);
 
         $missedAppointments = collect();
 
         foreach ($patients as $patient)
         {
             #Get Last Encounter
-            $lastEncounter = $patient->encounters->last();
+            $lastEncounter = $patient->encounters->where('encounter_type', $encounterType->encounter_type_id)->last();
             if (is_null($lastEncounter))
                 continue;
 
@@ -226,7 +230,7 @@ class ReportService
 
             #Check if Past Today and if not Dead
             if (
-                $parsedNextAppointmentDate->addDays($days)->greaterThan($today) &&
+                $parsedNextAppointmentDate->addDays($days)->lessThan($today) &&
                 is_null($adverseOutcome->value)
             )
                 $missedAppointments->push($patient);
@@ -239,13 +243,14 @@ class ReportService
     {
         $lastViralLoadConcept = Concept::find(46);
         $adverseOutcomeConcept = Concept::find(48);
+        $encounterType = EncounterType::find(4);
 
         $lastViralLoadOver1000 = collect();
 
         foreach ($patients as $patient)
         {
             #Get Last Encounter
-            $lastEncounter = $patient->encounters->last();
+            $lastEncounter = $patient->encounters->where('encounter_type', $encounterType->encounter_type_id)->last();
             if (is_null($lastEncounter))
                 continue;
 
@@ -277,13 +282,14 @@ class ReportService
     {
         $ARTRegimenConcept = Concept::find(39);
         $adverseOutcomeConcept = Concept::find(48);
+        $encounterType = EncounterType::find(4);
 
         $allOnDTG = collect();
 
         foreach ($patients as $patient)
         {
             #Get Last Encounter
-            $lastEncounter = $patient->encounters->last();
+            $lastEncounter = $patient->encounters->where('encounter_type', $encounterType->encounter_type_id)->last();
             if (is_null($lastEncounter))
                 continue;
 
@@ -319,6 +325,7 @@ class ReportService
         $today = Carbon::today();
         $nextAppointmentDateConcept = Concept::find(47);
         $adverseOutcomeConcept = Concept::find(48);
+        $encounterType = EncounterType::find(4);
 
         $defaultedBy31Days = collect();
         $defaultedBy61Days = collect();
@@ -326,7 +333,7 @@ class ReportService
         foreach ($patients as $patient)
         {
             #Get Last Encounter
-            $lastEncounter = $patient->encounters->last();
+            $lastEncounter = $patient->encounters->where('encounter_type', $encounterType->encounter_type_id)->last();
             if (is_null($lastEncounter))
                 continue;
 
@@ -373,10 +380,11 @@ class ReportService
         $defaulters = $this->defaulters($patients);
 
         $adverseOutcomeConcept = Concept::find(48);
+        $encounterType = EncounterType::find(4);
 
-        $patientsWithoutOutcome = $patients->filter(function ($patient) use ($adverseOutcomeConcept){
+        $patientsWithoutOutcome = $patients->filter(function ($patient) use ($adverseOutcomeConcept,$encounterType){
             #Get Last Encounter
-            $lastEncounter = $patient->encounters->last();
+            $lastEncounter = $patient->encounters->where('encounter_type', $encounterType->encounter_type_id)->last();
             if (is_null($lastEncounter))
                 return false;
 
